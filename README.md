@@ -2,7 +2,7 @@
 
 # 🛍️ Kolhapur Bazaar
 
-### *अस्सल कोल्हापुरी — Authentic Kolhapur, delivered online*
+### *स्थानिक कारागिरांचा अभिमान, आता तुमच्या घरी!*
 
 An e-commerce website for the best of Kolhapur — **chappals, masala blends, jaggery & jewellery** — built, containerised and deployed with a **Git → GitHub → Jenkins → Docker** pipeline.
 
@@ -15,7 +15,7 @@ An e-commerce website for the best of Kolhapur — **chappals, masala blends, ja
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
-[🔗 **GitHub Repository**](https://github.com/MrLegendGS/Kolhapur-Bazaar) · [🚀 **Quick Start**](#-4-how-to-run) · [⚙️ **Jenkins Pipeline**](#-8-jenkins-integration)
+[🔗 **GitHub Repository**](https://github.com/MrLegendGS/Kolhapur-Bazaar) · [🚀 **Quick Start**](#-4-how-to-run) · [🖼️ **Screenshots**](#️-5-website-screenshots) · [⚙️ **Jenkins Pipeline**](#️-8-jenkins-integration)
 
 </div>
 
@@ -37,10 +37,10 @@ An e-commerce website for the best of Kolhapur — **chappals, masala blends, ja
 2. [Technology Stack](#-2-technology-stack)
 3. [Folder Structure](#-3-folder-structure)
 4. [How to Run](#-4-how-to-run)
-5. [Website Screenshots](#-5-website-screenshots)
+5. [Website Screenshots](#️-5-website-screenshots)
 6. [Changes Made](#-6-changes-made-commits)
 7. [Git and GitHub Workflow](#-7-git-and-github-workflow)
-8. [Jenkins Integration](#-8-jenkins-integration)
+8. [Jenkins Integration](#️-8-jenkins-integration)
 
 ---
 
@@ -57,13 +57,13 @@ An e-commerce website for the best of Kolhapur — **chappals, masala blends, ja
 
 ### ✨ Features
 
-- 🛒 Product grid with add-to-cart
+- 🛒 Product grid with add-to-cart and quantity controls
 - 💾 Cart persisted in `localStorage` (survives page refresh)
 - 🧮 Validated cart items with protected total calculation
 - 🪔 Marathi artisan tagline on the homepage
 - 📱 Responsive and accessible styling
 - 🐳 One-command Docker deployment
-- 🤖 Fully automated Jenkins CI/CD pipeline with a smoke test
+- 🤖 Automated Jenkins CI/CD pipeline with a smoke test
 
 ---
 
@@ -112,19 +112,22 @@ docker run -d -p 8085:80 --name kolhapur-bazaar kolhapur-bazaar
 ### 🏠 Home Page
 The home page displays Kolhapur Bazaar branding, product categories, and the main shopping section.
 
-![Home Page](docs/screenshots/home.png)
+![Home Page](docs/screenshots/Home_Page.png)
+
+### 🧺 Product Listing
+The "Popular from Kolhapur" section shows each product with its category, rating, discounted price and an **Add** button.
+
+![Product Listing](docs/screenshots/UI.png)
 
 ### 🛒 Shopping Cart
-The shopping cart allows users to view selected products, check the total amount, and proceed to place an order.
+The shopping cart allows users to view selected products, change quantities, check the total amount, and proceed to place an order.
 
-![Shopping Cart](docs/screenshots/cart.png)
+![Shopping Cart](docs/screenshots/Shopping_Cart.png)
 
 ### 🚢 CI/CD Deployment
 The website is built and deployed using a Jenkins pipeline and Docker container.
 
-![CI/CD Deployment](docs/screenshots/jenkins.png)
-
-> 📝 Make sure the image file names above match the files inside `docs/screenshots/`.
+![CI/CD Deployment](docs/screenshots/CI_CD_Deployment.png)
 
 ---
 
@@ -177,12 +180,9 @@ https://github.com/MrLegendGS/Kolhapur-Bazaar
 ### Setup steps
 
 1. Install Jenkins and the **Git**, **Pipeline** and **Docker Pipeline** plugins.
-2. Make sure the `jenkins` user can run Docker:
-   ```bash
-   sudo usermod -aG docker jenkins
-   sudo systemctl restart jenkins
-   ```
-3. Create a new item, choose **Pipeline**, name it `kolhapur-bazaar`.
+2. Make sure Jenkins can run Docker commands.
+   *(On Linux: `sudo usermod -aG docker jenkins`, then restart Jenkins. On Windows, Docker Desktop must be running.)*
+3. Create a new item, choose **Pipeline**, name it `kolhapur-bazaar-pipeline`.
 4. Under Pipeline, select **Pipeline script from SCM**, then:
    - SCM = **Git**
    - Repository URL = `https://github.com/MrLegendGS/Kolhapur-Bazaar.git`
@@ -206,15 +206,21 @@ https://github.com/MrLegendGS/Kolhapur-Bazaar
 | ✅ Validate files | Confirms required files exist |
 | 🐳 Build Docker image | Builds the Nginx image from the `Dockerfile` |
 | 🚀 Deploy container | Runs the container on port `8085` |
-| 🧪 Smoke test | Checks the deployed site responds |
+| 🧪 Smoke test | Fetches the site and checks for the expected "Kolhapur Bazaar" content |
 
 ### 📸 Result screenshots
 
-| Pipeline stage view | Console output | Deployed site |
-|:-:|:-:|:-:|
-| ![Stage view](docs/screenshots/pipeline-stages.png) | ![Console](docs/screenshots/console-success.png) | ![Site](docs/screenshots/deployed-site.png) |
+**Pipeline status page** — builds #6 to #10 passed after fixing early failures (#1, #3, #4, #5):
 
-> Console output should end with **`Finished: SUCCESS`** ✅
+![Jenkins pipeline status](docs/screenshots/CI_CD_Deployment.png)
+
+**Console output** — the smoke test confirms *"Website is live and responding"* and the build ends with `Finished: SUCCESS` ✅:
+
+![Jenkins console output](docs/screenshots/Console_Output.png)
+
+**Deployed site** — served by the Nginx container at `http://localhost:8085`:
+
+![Deployed website](docs/screenshots/Home_Page.png)
 
 ---
 
