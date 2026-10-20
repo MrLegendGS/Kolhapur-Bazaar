@@ -36,8 +36,17 @@ docker run -d -p 8085:80 --name kolhapur-bazaar kolhapur-bazaar
 ```
 
 ## 5. Website screenshots
-TODO: add `![Home page](docs/screenshots/01-home.png)` and a cart screenshot, each with a caption.
+Home Page
 
+The home page displays Kolhapur Bazaar branding, product categories, and the main shopping section.
+
+Shopping Cart
+
+The shopping cart allows users to view selected products, check the total amount, and proceed to place an order.
+
+CI/CD Deployment
+
+The website is built and deployed using a Jenkins pipeline and Docker container.
 ## 6. Changes made (5 or more)
 TODO: fill the table below with your real commit hashes (`git log --oneline`).
 
