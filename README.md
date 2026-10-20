@@ -48,16 +48,18 @@ CI/CD Deployment
 
 The website is built and deployed using a Jenkins pipeline and Docker container.
 ## 6. Changes made (5 or more)
-TODO: fill the table below with your real commit hashes (`git log --oneline`).
-
-| # | Change | Commit hash | Screenshot |
+| # | Change | 
 |---|---|---|---|
-| 0 | Initial site: product grid and cart | | |
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 0 | Initial site: product grid and cart | 
+| 1 | Add files via upload| | |
+| 2 | Refactor Jenkinsfile for improved CI/CD pipeline|
+| 3 |Add files via upload |
+| 4 |Test Jenkins CI/CD pipeline |
+| 5 | docs: add student details to README| 
+| 6 |docs: document website and deployment screenshots| 
+| 7 |feat: add Marathi artisan tagline to homepage|
+| 8 |feat: improve responsive styling and accessibility|
+| 9 |fix: validate cart items and protect total calculation|
 
 ## 7. Git and GitHub workflow
 ```bash
