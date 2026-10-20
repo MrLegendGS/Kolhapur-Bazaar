@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kolhapur Bazaar - Chappals, masalas and gul from Kolhapur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="strip">Free delivery above Rs. 999 &nbsp;|&nbsp; Pay on delivery across Maharashtra</div>
+
+  <header class="top">
+    <a class="brand" href="#">Kolhapur Bazaar <span class="mr">कोल्हापूर बाजार</span></a>
+    <nav class="nav">
+      <a href="#shop">Shop</a>
+      <a href="#why">Why us</a>
+    </nav>
+    <button id="cartBtn" class="cart-btn" aria-label="Open cart">Cart <span id="cartCount" class="count">0</span></button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-mr">कोल्हापुरी, घरपोच.</p>
+      <h2>Handmade in Kolhapur. Delivered to your door.</h2>
+      <p>Chappals stitched by hand, masalas ground in small batches, and gul from local farms. Straight from the maker, no middlemen.</p>
+      <a class="cta" href="#shop">Start shopping</a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="tile t1">👡</div>
+      <div class="tile t2">🌶️</div>
+      <div class="tile t3">🟤</div>
+      <div class="tile t4">📿</div>
+    </div>
+  </section>
+
+  <section id="why" class="why">
+    <div><strong>Made by hand</strong><span>Every chappal is stitched and finished by a Kolhapur artisan.</span></div>
+    <div><strong>Pay on delivery</strong><span>Check your order first, pay when it arrives.</span></div>
+    <div><strong>Fresh masalas</strong><span>Ground in small batches and packed within days.</span></div>
+  </section>
+
+  <main id="shop">
+    <h2 class="sec-title">Popular from Kolhapur</h2>
+    <div id="productGrid" class="grid"></div>
+  </main>
+
+  <div id="overlay" class="overlay"></div>
+  <aside id="cartPanel" class="cart-panel" aria-hidden="true">
+    <div class="cart-head"><h3>Your cart</h3><button id="closeCart" class="ghost" aria-label="Close cart">Close</button></div>
+    <ul id="cartItems"></ul>
+    <p class="total">Total: <strong id="cartTotal">Rs. 0</strong></p>
+    <button id="checkoutBtn" class="buy wide">Place order</button>
+    <p id="orderMsg" role="status"></p>
+  </aside>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
