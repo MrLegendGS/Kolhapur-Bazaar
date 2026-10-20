@@ -1,6 +1,8 @@
 # Kolhapur Bazaar
 
-> TODO: replace this line with your name, roll number and division.
+**Name:** Gaurav Sanjay Nikhare  
+**Roll Number:** 41  
+**Division:** B
 
 ## 1. Introduction and objective
 Kolhapur Bazaar is an e-commerce website that sells products from Kolhapur: Kolhapuri chappals, masala blends, jaggery and jewellery. The objective is to build a working online store with a cart and order flow, manage it with Git/GitHub, and automate build, deploy and testing with Jenkins.
