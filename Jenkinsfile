@@ -1,55 +1,107 @@
+
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    IMAGE = 'kolhapur-bazaar'
-    CONTAINER = 'kolhapur-bazaar-ci'
-    HOST_PORT = '8085'
-  }
-
-  stages {
-    stage('Checkout') {
-      steps { checkout scm }
+    environment {
+        IMAGE = 'kolhapur-bazaar'
+        CONTAINER = 'kolhapur-bazaar-ci'
+        HOST_PORT = '8085'
     }
 
-    stage('Validate files') {
-      steps {
-        sh '''
-          test -f src/index.html
-          test -f src/css/style.css
-          test -f src/js/app.js
-          grep -q "Kolhapur Bazaar" src/index.html
-          echo "Required files found"
-        '''
-      }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Validate Files') {
+            steps {
+                bat '''
+                    if not exist "Dockerfile" (
+                        echo ERROR: Dockerfile not found
+                        exit /b 1
+                    )
+
+                    if not exist "src\\index.html" (
+                        echo ERROR: src\\index.html not found
+                        exit /b 1
+                    )
+
+                    if not exist "src\\css\\style.css" (
+                        echo ERROR: CSS file not found
+                        exit /b 1
+                    )
+
+                    if not exist "src\\js\\app.js" (
+                        echo ERROR: JavaScript file not found
+                        exit /b 1
+                    )
+
+                    findstr /C:"Kolhapur Bazaar" "src\\index.html"
+                    if errorlevel 1 (
+                        echo ERROR: Expected website text not found
+                        exit /b 1
+                    )
+
+                    echo All required files validated successfully
+                '''
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker version'
+                bat 'docker build -t %IMAGE%:%BUILD_NUMBER% -t %IMAGE%:latest .'
+            }
+        }
+
+        stage('Deploy Container') {
+            steps {
+                bat '''
+                    docker rm -f "%CONTAINER%" 2>nul
+                    docker run -d --name "%CONTAINER%" -p %HOST_PORT%:80 "%IMAGE%:latest"
+                    if errorlevel 1 exit /b 1
+                '''
+            }
+        }
+
+        stage('Smoke Test') {
+            steps {
+                bat '''
+                    timeout /t 5 /nobreak >nul
+
+                    curl.exe -f "http://localhost:%HOST_PORT%/" -o response.html
+                    if errorlevel 1 (
+                        echo ERROR: Website did not respond successfully
+                        docker logs "%CONTAINER%"
+                        exit /b 1
+                    )
+
+                    findstr /C:"Kolhapur Bazaar" response.html
+                    if errorlevel 1 (
+                        echo ERROR: Expected website content not found
+                        exit /b 1
+                    )
+
+                    echo Website is live and responding
+                '''
+            }
+        }
     }
 
-    stage('Build Docker image') {
-      steps { sh 'docker build -t $IMAGE:$BUILD_NUMBER -t $IMAGE:latest .' }
-    }
+    post {
+        success {
+            echo 'Kolhapur Bazaar CI/CD Pipeline completed successfully!'
+            echo 'Website URL: http://localhost:8085'
+        }
 
-    stage('Deploy container') {
-      steps {
-        sh '''
-          docker rm -f $CONTAINER || true
-          docker run -d --name $CONTAINER -p $HOST_PORT:80 $IMAGE:latest
-        '''
-      }
-    }
+        failure {
+            echo 'Pipeline failed. Check Console Output for details.'
+        }
 
-    stage('Smoke test') {
-      steps {
-        sh '''
-          sleep 3
-          curl -sf http://localhost:$HOST_PORT/ | grep -q "Kolhapur Bazaar"
-          echo "Website is live and responding"
-        '''
-      }
+        always {
+            echo 'Kolhapur Bazaar Pipeline execution finished.'
+        }
     }
-  }
-
-  post {
-    success { echo "Build #${env.BUILD_NUMBER} passed. Site at http://localhost:${env.HOST_PORT}" }
-    failure { echo "Build failed. Check the stage logs above." }
-  }
 }
